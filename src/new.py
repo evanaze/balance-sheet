@@ -1,6 +1,6 @@
 """Updates the balance sheet for the month"""
 import os
-from . import utils, balanceSheet
+from . import balanceSheet
 
 
 def main():
