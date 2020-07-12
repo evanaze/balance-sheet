@@ -12,7 +12,7 @@ def main():
     bs.insert(l1)
     bs.insert(a1)
     bs.read()
-
+    bs.display()
 
 if __name__ == "__main__":
     main()

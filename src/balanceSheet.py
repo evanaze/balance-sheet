@@ -39,3 +39,8 @@ class BalanceSheet:
         cursorObj = self.con.cursor()
         cursorObj.execute('INSERT INTO balancesheet(table_id, type, name, value, description) VALUES(?, ?, ?, ?, ?)', x)
         self.con.commit()
+
+    def display(self):
+        "Displays the current state of the balance sheet"
+        print(f"Assets:\n{self.data.loc["Asset"]}")
+        print(f"Liabilities:\n{self.data.loc["Liability"]}")
