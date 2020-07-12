@@ -42,5 +42,12 @@ class BalanceSheet:
 
     def display(self):
         "Displays the current state of the balance sheet"
-        print(f"Assets:\n{self.data.loc["Asset"]}")
-        print(f"Liabilities:\n{self.data.loc["Liability"]}")
+        ass = self.data.loc['Asset']
+        print(f"\nAssets:\n{ass}")
+        tot_ass = ass.Value.sum()
+        print(f"Total Assets: {tot_ass}")
+        liab = self.data.loc['Liability']
+        print(f"\nLiabilities:\n{liab}")
+        tot_liab = liab.Value.sum()
+        print(f"Total Liabilities: {tot_liab}")
+        print(f"Net worth: {tot_ass - tot_liab}")
