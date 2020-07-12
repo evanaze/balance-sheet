@@ -40,7 +40,20 @@ class BalanceSheet:
         "Gets the most recent balance sheet"
         cursorObj = self.con.cursor()
         cursorObj = cursorObj.execute("SELECT date FROM lastupdated ORDER BY table_id LIMIT 1")
-        print("Date:", cursorObj.readone())
+        self.last_date = cursorObj.fetchone()
+        print("Date:", self.last_date)
+
+    def insert_date(self):
+        "inserts the newest date"
+        cursorObj = self.con.cursor()
+        cursorObj = cursorObj.execute("SELECT MAX(table_id) FROM lastupdated")
+        last_table = cursorObj.fetchone()
+        if not last_table:
+            last_table = 0
+        self.table_id = last_table + 1
+        date = str(datetime.today().date().month) + "/" + str(datetime.today().date().year)
+        cursorObj = cursorObj.execute("INSERT INTO lastupdated(table_id, date) VALUES(?, ?)", (self.table_id, date))
+        self.con.commit()
 
     def insert(self, x):
         "inserts an asset or liability"
@@ -62,3 +75,5 @@ class BalanceSheet:
         # net worth
         print(f"Total Liabilities: {tot_liab}")
         print(f"Net worth: {tot_ass - tot_liab}")
+
+    

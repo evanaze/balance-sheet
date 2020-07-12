@@ -8,7 +8,9 @@ def main():
     # the balance sheet object
     bs = balanceSheet.BalanceSheet()
     bs.read()
-    # bs.display()
+    bs.get_date()
+    if not bs.last_date:
+        print("Setting first balance sheet")
 
 if __name__ == "__main__":
     main()
