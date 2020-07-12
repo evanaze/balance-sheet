@@ -36,7 +36,7 @@ class BalanceSheet:
         cursorObj.execute("SELECT * FROM balancesheet")
         rows = cursorObj.fetchall()
         self.data = pd.DataFrame(rows, columns = ["Table", "Type", "Name", "Value", "Description"])
-        print(self.data)
+        print(pd.pivot_table(self.data), index=["Type"])
 
     def insert(self, x):
         cursorObj = self.con.cursor()
