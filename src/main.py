@@ -13,7 +13,7 @@ class Program:
         done = False
         while not done:
             res = []
-            a_o_l = input("Asset or Liability (a/l)? ")
+            a_o_l = input("\nAsset or Liability (a/l)? ")
             if a_o_l.lower() == "a":
                 res.append("Asset")
             elif a_o_l.lower() == "l":
@@ -77,14 +77,14 @@ class Program:
         self.bs.display()
         edit = input(f"\nEdit your current balance sheet for {self.month_year}? (y/n) ")
         if edit.lower() == 'y':
-            print(f"Editing your balance sheet for {self.month_year}")
-            next = input("add, modify, or delete? ")
-            if next == "add":
+            prompt = input("add, modify, or delete? ")
+            if prompt == "add":
                 self.add()
-            elif next == "modify":
+            elif prompt == "modify":
                 self.modify()
-        else:
-            print("Done!")
+            elif prompt == "delete":
+                self.delete()
+        self.bs.display()
 
 
 if __name__ == "__main__":
