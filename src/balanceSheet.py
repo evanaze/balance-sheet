@@ -22,7 +22,6 @@ class BalanceSheet:
     def sql_connection(self):
         try:
             self.con = sqlite3.connect("balancesheet.db")
-            print("Connection is established: balancesheet.db")
         except sqlite3.Error:
             print(sqlite3.Error)
 
@@ -31,6 +30,7 @@ class BalanceSheet:
         cursorObj = self.con.cursor()
         cursorObj.execute("CREATE TABLE IF NOT EXISTS balancesheet(table_id integer, type text, name text, value real, description text)")
         cursorObj.execute("CREATE TABLE IF NOT EXISTS lastupdated(table_id integer PRIMARY KEY, date text)")
+        cursorObj.execute("CREATE TABLE IF NOT EXISTS stats(table_id integer PRIMARY KEY, date text, assets real, liabilities real, net_worth real)")
         self.con.commit()
 
     def read(self):
@@ -67,28 +67,39 @@ class BalanceSheet:
         x = [self.table_id] + item
         cursorObj.execute('INSERT INTO balancesheet(table_id, type, name, value, description) VALUES(?, ?, ?, ?, ?)', x)
         self.con.commit()
+    
+    def eval(self):
+        "Evaluates the value of the balance sheet"
+        # assets
+        try:
+            self.ass = self.data.loc['Asset']
+            self.tot_ass = self.ass.Value.sum()
+        except KeyError:
+            self.tot_ass = 0
+        # liabilities
+        try:
+            self.liab = self.data.loc['Liability']
+            self.tot_liab = self.liab.Value.sum()
+        except KeyError:
+            self.tot_liab = 0
+        # net worth
+        self.net_worth = self.tot_ass - self.tot_liab
 
     def display(self):
         "Displays the current state of the balance sheet"
+        # eval
+        self.eval()
         # assets
-        try:
-            ass = self.data.loc['Asset']
-            print(f"\nAssets:\n{ass}")
-            tot_ass = ass.Value.sum()
-            print(f"Total Assets: {tot_ass}")
-        except KeyError:
+        if self.tot_ass == 0:
             print("No Assets")
-            tot_ass = 0
+        else:
+            print(f"\nAssets:\n{self.ass}")
+            print(f"Total Assets: {self.tot_ass}")
         # liabilities
-        try:
-            liab = self.data.loc['Liability']
-            print(f"\nLiabilities:\n{liab}")
-            tot_liab = liab.Value.sum()
-        except KeyError:
+        if self.tot_liab == 0:
             print("No Liabilities")
-            tot_liab = 0
+        else:
+            print(f"\nLiabilities:\n{self.liab}")
+            print(f"Total Liabilities: {self.tot_liab}")
         # net worth
-        print(f"Total Liabilities: {tot_liab}")
-        print(f"Net worth: {tot_ass - tot_liab}")
-
-    
+        print(f"Net worth: {self.net_worth}")

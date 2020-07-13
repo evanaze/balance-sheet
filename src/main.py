@@ -47,7 +47,7 @@ class Program:
 
     def check_for_update(self):
         "Check if we need to make a new balance sheet for the month"
-
+        return 0
 
     def check_init(self):
         "Checks if we have a previous balance sheet to carry through or edit"
@@ -64,14 +64,16 @@ class Program:
         # read the saved balance sheet
         self.bs.read()
         if len(self.bs) == 0:
-            print("Empty Balance sheet")
+            print("Creating first Balance Sheet")
             self.new()
+        print(f"\nBalance sheet for {self.month_year}")
+        self.bs.display()
+        edit = input(f"\nEdit your current balance sheet for {self.month_year}? (y/n) ")
+        if edit.lower() == 'y':
+            print(f"Editing your balance sheet for {self.month_year}")
+            self.bs.display()
         else:
-            if self.check_for_update():
-                print(f"Your new balance sheet for {self.month_year}")
-            else:
-                print(f"Editing your balance sheet for {self.month_year}")
-                self.bs.display()
+            print("Done!")
 
 
 if __name__ == "__main__":
