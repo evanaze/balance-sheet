@@ -42,7 +42,7 @@ class BalanceSheet:
     def get_date(self):
         "Gets the most recent balance sheet"
         cursorObj = self.con.cursor()
-        cursorObj = cursorObj.execute("SELECT date FROM lastupdated ORDER BY table_id LIMIT 1")
+        cursorObj = cursorObj.execute("SELECT date FROM lastupdated ORDER BY table_id DESC LIMIT 1")
         self.last_date = cursorObj.fetchone()[0]
 
     def insert_date(self, date):
