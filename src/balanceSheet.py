@@ -11,8 +11,8 @@ import sqlite3
 class BalanceSheet:
     "The balance sheet class"
     def __init__(self):
-        self.sql_connection()
-        self.sql_table()
+        self.sql_connection()       # opens the connection to the database
+        self.sql_table()            # creates the tables if they have not been created
 
     def sql_connection(self):
         try:
@@ -40,16 +40,15 @@ class BalanceSheet:
         "Gets the most recent balance sheet"
         cursorObj = self.con.cursor()
         cursorObj = cursorObj.execute("SELECT date FROM lastupdated ORDER BY table_id LIMIT 1")
-        self.last_date = cursorObj.fetchone()
-        print("Date:", self.last_date)
+        self.last_date = cursorObj.fetchone()[0]
 
-    def insert_date(self):
+    def insert_date(self, date):
         "inserts the newest date"
         cursorObj = self.con.cursor()
+        # get the id number of the new table
         cursorObj = cursorObj.execute("SELECT MAX(table_id) FROM lastupdated")
         last_table = cursorObj.fetchone()[0]
         self.table_id = last_table + 1
-        date = str(datetime.today().date().month) + "/" + str(datetime.today().date().year)
         cursorObj = cursorObj.execute("INSERT INTO lastupdated(table_id, date) VALUES(?, ?)", (self.table_id, date))
         self.con.commit()
 
