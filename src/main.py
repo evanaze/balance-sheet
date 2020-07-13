@@ -1,5 +1,4 @@
 """Updates the balance sheet for the month"""
-import os
 from . import balanceSheet
 
 
