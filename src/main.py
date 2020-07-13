@@ -13,29 +13,29 @@ class Program:
         done = False
         while not done:
             res = []
-            a_o_l = input("Asset or Liability (a/l)?")
-            if a_o_l == "a":
+            a_o_l = input("Asset or Liability (a/l)? ")
+            if a_o_l.lower() == "a":
                 res.append("Asset")
-            elif a_o_l == "l":
+            elif a_o_l.lower() == "l":
                 res.append("Liability")
             else:
                 print("Error: invalid input")
                 continue
-            name = input("Item name:")
+            name = input("Item name: ")
             res.append(name)
-            val = input("Value:")
+            val = input("Value: ")
             try:
                 res.append(int(val))
             except ValueError:
                 print("Error: invalid input")
                 continue
-            desc = input("Description (optional):")
+            desc = input("Description (optional): ")
             res.append(desc)
             self.bs.insert(res)
-            cont = input("Continue (y/n)?")
-            if cont == "y":
+            cont = input("Continue (y/n)? ")
+            if cont.lower() == "n":
                 done = True
-            elif cont != "n":
+            elif cont.lower() != "y":
                 print("Error: invalid input")
                 continue
 
@@ -70,7 +70,8 @@ class Program:
             if self.check_for_update():
                 print(f"Your new balance sheet for {self.month_year}")
             else:
-                print("Editing your balance sheet for this month")
+                print(f"Editing your balance sheet for {self.month_year}")
+                self.bs.display()
 
 
 if __name__ == "__main__":
