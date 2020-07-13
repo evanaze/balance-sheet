@@ -38,6 +38,13 @@ class Program:
             elif cont.lower() != "y":
                 print("Error: invalid input")
                 continue
+    def modify(self):
+        "Modifies entries in the current balance sheet"
+        return 0
+    
+    def delete(self):
+        "Deletes entries in the balance sheet"
+        return 0
 
     def new(self):
         "Create a new balance sheet"
@@ -66,12 +73,16 @@ class Program:
         if len(self.bs) == 0:
             print("Creating first Balance Sheet")
             self.new()
-        print(f"\nBalance sheet for {self.month_year}")
+        print(f"\nBalance sheet for {self.month_year}:\n")
         self.bs.display()
         edit = input(f"\nEdit your current balance sheet for {self.month_year}? (y/n) ")
         if edit.lower() == 'y':
             print(f"Editing your balance sheet for {self.month_year}")
-            self.bs.display()
+            next = input("add, modify, or delete? ")
+            if next == "add":
+                self.add()
+            elif next == "modify":
+                self.modify()
         else:
             print("Done!")
 
