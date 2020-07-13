@@ -47,9 +47,7 @@ class BalanceSheet:
         "inserts the newest date"
         cursorObj = self.con.cursor()
         cursorObj = cursorObj.execute("SELECT MAX(table_id) FROM lastupdated")
-        last_table = cursorObj.fetchone()
-        if not last_table:
-            last_table = 0
+        last_table = cursorObj.fetchone()[0]
         self.table_id = last_table + 1
         date = str(datetime.today().date().month) + "/" + str(datetime.today().date().year)
         cursorObj = cursorObj.execute("INSERT INTO lastupdated(table_id, date) VALUES(?, ?)", (self.table_id, date))

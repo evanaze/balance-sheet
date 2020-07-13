@@ -11,6 +11,9 @@ def main():
     bs.get_date()
     if not bs.last_date:
         print("Setting first balance sheet")
+        bs.insert_date()
+    else:
+        print(bs.last_date)
 
 if __name__ == "__main__":
     main()
