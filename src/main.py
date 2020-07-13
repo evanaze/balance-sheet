@@ -20,7 +20,8 @@ class Program:
         # read the saved balance sheet
         self.bs.read()
         self.check_init()
-        self.bs.display()
+        if len(self.bs) == 0:
+            print("Empty Balance sheet")
 
 if __name__ == "__main__":
     Program().run()

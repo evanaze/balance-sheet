@@ -14,6 +14,9 @@ class BalanceSheet:
         self.sql_connection()       # opens the connection to the database
         self.sql_table()            # creates the tables if they have not been created
 
+    def __len__(self):
+        return len(self.data)
+
     def sql_connection(self):
         try:
             self.con = sqlite3.connect("balancesheet.db")
