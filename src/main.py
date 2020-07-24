@@ -38,6 +38,7 @@ class Program:
             elif cont.lower() != "y":
                 print("Error: invalid input")
                 continue
+            
     def modify(self):
         "Modifies entries in the current balance sheet"
         return 0

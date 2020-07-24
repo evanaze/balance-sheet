@@ -139,3 +139,7 @@ cython_debug/
 
 # the data 
 *.db
+
+# test files
+data.csv
+*.ipynb

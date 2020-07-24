@@ -72,7 +72,8 @@ class BalanceSheet:
         "Evaluates the value of the balance sheet"
         # assets
         try:
-            self.ass = self.data.loc['Asset']
+            self.ass = self.data.loc['Asset'].reset_index(drop=True)
+            print(self.ass)
             self.tot_ass = self.ass.Value.sum()
         except KeyError:
             self.tot_ass = 0
