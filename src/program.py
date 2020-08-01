@@ -1,6 +1,6 @@
 """Updates the balance sheet for the month"""
 from datetime import datetime
-from . import balanceSheet
+import balanceSheet
 
 
 class Program:

@@ -1,7 +1,7 @@
 # __main__.py
 
-from src import balanceSheet
-from src import program
+import balanceSheet
+import program
 
 def main():
     "Runs the balance sheet program"
