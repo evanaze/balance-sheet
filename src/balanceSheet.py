@@ -101,8 +101,11 @@ class BalanceSheet:
         elif type_sec == "Liability":
             # update the liabilities dataframe
             self.liab.at[item, field] = value
-        # update the SQL table
-        cursorObj = cursorObj.execute(f"UPDATE balancesheet SET {field} = {value} WHERE type = {type_sec} AND table_id = {self.table_id}")
+        # typecast the value
+        if field == "value":
+            cursorObj = cursorObj.execute(f"UPDATE balancesheet SET {field} = {value} WHERE type = '{type_sec}' AND table_id = {self.table_id}")
+        else:
+            cursorObj = cursorObj.execute(f"UPDATE balancesheet SET {field} = '{value}' WHERE type = '{type_sec}' AND table_id = {self.table_id}")
         self.con.commit()
 
     def delete(self, type_sec, item):

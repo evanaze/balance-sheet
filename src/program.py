@@ -13,7 +13,8 @@ class Program:
         "Prompt the user to add new items to the balance sheet"
         done = False
         while not done:
-            res = []
+            res = []            # where we store the item to enter
+            # prompt for item type
             a_o_l = input("\nAsset or Liability (a/l)? ")
             if a_o_l.lower() == "a":
                 res.append("Asset")
@@ -22,16 +23,20 @@ class Program:
             else:
                 print("Error: invalid input")
                 continue
+            # prompt for the name of the item
             name = input("Item name: ")
             res.append(name)
+            # prompt for the value of the item
             val = input("Value: ")
             try:
                 res.append(float(val))
             except ValueError:
                 print("Error: invalid input")
                 continue
+            # prompt for the description of the item
             desc = input("Description (optional): ")
             res.append(desc)
+            # insert the result into the table
             self.bs.insert(res)
             # show current balance sheet
             self.bs.read(); self.bs.display()
@@ -59,12 +64,19 @@ class Program:
             # which item to modify
             item = input("Which item would you like to modify? ")
             try:
-                item = int(inp)
+                item = int(item)
             except ValueError:
                 print("Error: invalid input")
                 continue
             # the field to modify
-            field = input("Which field? (name, value, description?) ")
+            field = input("Which field? (name/n, value/v, description/d) ")
+            # interpret the shorthand
+            if field == "n":
+                field = "name"
+            elif field == "v":
+                field = "value"
+            elif field == "d":
+                field = "description"
             # what to make the new value
             value = input("What is the new value? ")
             # make the modification
@@ -113,10 +125,11 @@ class Program:
 
     def check_for_update(self):
         "Check if we need to make a new balance sheet for the month"
-        return 0
+        print(self.bs.get_date())
 
     def check_init(self):
         "Checks if we have a previous balance sheet to carry through or edit"
+        # get the last date the balance sheet was updated
         self.bs.get_date()
         if not self.bs.last_date:
             # make a new balance sheet
@@ -137,6 +150,8 @@ class Program:
         "Guides through the balance sheet workflow"
         # check if we have a current balance sheet
         self.check_init()
+        # check for a new month
+        self.check_for_update()
         # read the saved balance sheet
         self.bs.read()
         # display the current balance sheet
@@ -157,7 +172,6 @@ class Program:
                     done = True
                 else:
                     print("Invalid entry")
-        self.bs.display()
 
 
 if __name__ == "__main__":
