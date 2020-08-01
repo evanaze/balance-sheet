@@ -111,13 +111,13 @@ class BalanceSheet:
         cursorObj = self.con.cursor()
         # the type of security we are deleting
         if type_sec == "Asset":
+            (name, value, description) = self.ass.iloc[item]
             self.ass.drop(item, inplace=True)
-            sql_item_id = item + 1
         elif type_sec == "Liability":
+            (name, value, description) = self.liab.iloc[item]
             self.liab.drop(item, inplace=True)
-            sql_item_id = item + len(self.ass) + 1
         # update the SQL table
-        cursorObj = cursorObj.execute(f"DELETE FROM balancesheet WHERE item_id = {sql_item_id}")
+        cursorObj = cursorObj.execute(f"DELETE FROM balancesheet WHERE table_id = {self.table_id} AND name = {name} AND value = {value}")
         self.con.commit()
 
     def eval(self):

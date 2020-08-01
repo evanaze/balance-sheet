@@ -132,17 +132,24 @@ class Program:
         self.check_init()
         # read the saved balance sheet
         self.bs.read()
+        # display the current balance sheet
         print(f"\nBalance sheet for {self.today}:\n")
         self.bs.display()
         edit = input(f"\nEdit your current balance sheet for {self.today}? (y/n) ")
         if edit.lower() == 'y':
-            prompt = input("add, modify, or delete? ")
-            if prompt == "add":
-                self.add()
-            elif prompt == "modify":
-                self.modify()
-            elif prompt == "delete":
-                self.delete()
+            done = False
+            while not done:
+                prompt = input("add, modify, delete, or done? (a, m, d, n) ")
+                if prompt in ["a", "add"]:
+                    self.add()
+                elif prompt in ["m", "modify"]:
+                    self.modify()
+                elif prompt in ["d", "delete"]:
+                    self.delete()
+                elif prompt in ["n", "done"]:
+                    done = True
+                else:
+                    print("Invalid entry")
         self.bs.display()
 
 
