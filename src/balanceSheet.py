@@ -117,7 +117,7 @@ class BalanceSheet:
             (name, value, description) = self.liab.iloc[item]
             self.liab.drop(item, inplace=True)
         # update the SQL table
-        cursorObj = cursorObj.execute(f"DELETE FROM balancesheet WHERE table_id = {self.table_id} AND name = {name} AND value = {value}")
+        cursorObj = cursorObj.execute(f"DELETE FROM balancesheet WHERE table_id = {self.table_id} AND name = '{name}' AND value = {value}")
         self.con.commit()
 
     def eval(self):

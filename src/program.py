@@ -33,6 +33,9 @@ class Program:
             desc = input("Description (optional): ")
             res.append(desc)
             self.bs.insert(res)
+            # show current balance sheet
+            self.bs.read(); self.bs.display()
+            # prompt to continue
             cont = input("Continue (y/n)? ")
             if cont.lower() == "n":
                 done = True
@@ -66,6 +69,8 @@ class Program:
             value = input("What is the new value? ")
             # make the modification
             self.bs.modify(type_sec, item, field, value)
+            # show current balance sheet
+            self.bs.read(); self.bs.display()
             # ask to continue
             cont = input("Continue (y/n)? ")
             if cont.lower() == "n":
@@ -96,6 +101,8 @@ class Program:
                 continue
             # make the deletion
             self.bs.delete(type_sec, item)
+            # show current balance sheet
+            self.bs.read(); self.bs.display()
             # ask to continue
             cont = input("Continue (y/n)? ")
             if cont.lower() == "n":
