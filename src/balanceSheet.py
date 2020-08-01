@@ -16,6 +16,7 @@ class BalanceSheet:
         self.sql_table()            # creates the tables if they have not been created
         self.get_date()             # get the date of the last balance sheet
         self.get_table_id()         # get the current table id
+        print(self.table_id)
 
     def __len__(self):
         return len(self.data)

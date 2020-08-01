@@ -1,4 +1,5 @@
 """Updates the balance sheet for the month"""
+import sys
 from datetime import datetime
 import balanceSheet
 
@@ -103,14 +104,6 @@ class Program:
                 print("Error: invalid input")
                 continue
 
-    def new(self):
-        "Create a new balance sheet"
-        # add the date of the new balance sheet
-        print("Setting first balance sheet")
-        self.bs.insert_date(self.today)
-        # add items to the new balance sheet
-        self.add()
-
     def check_for_update(self):
         "Check if we need to make a new balance sheet for the month"
         return 0
@@ -119,7 +112,19 @@ class Program:
         "Checks if we have a previous balance sheet to carry through or edit"
         self.bs.get_date()
         if not self.bs.last_date:
-            self.new()
+            # make a new balance sheet
+            print("Setting first balance sheet")
+            # add the date of the new balance sheet
+            self.bs.insert_date(self.today)
+            # add items to the new balance sheet
+            self.add()
+            # read the current balance sheet
+            self.bs.read()
+            print(f"\nBalance sheet for {self.today}:\n")
+            # display the sheet
+            self.bs.display()
+            # quit the parent program
+            sys.exit()
 
     def run(self):
         "Guides through the balance sheet workflow"
