@@ -41,11 +41,68 @@ class Program:
             
     def modify(self):
         "Modifies entries in the current balance sheet"
-        return 0
+        done = False
+        while not done:
+            # whether we are modifying an asset or liability
+            a_o_l = input("\nAsset or Liability (a/l)? ")
+            if a_o_l.lower() == "a":
+                type_sec = "Asset"
+            elif a_o_l.lower() == "l":
+                type_sec = "Liability"
+            else:
+                print("Error: invalid input")
+                continue
+            # which item to modify
+            item = input("Which item would you like to modify?")
+            try:
+                item = int(inp)
+            except ValueError:
+                print("Error: invalid input")
+                continue
+            # the field to modify
+            field = input("Which field? (name, value, description?)")
+            # what to make the new value
+            value = input("What is the new value?")
+            # make the modification
+            self.bs.modify(type_sec, item, field, value)
+            # ask to continue
+            cont = input("Continue (y/n)? ")
+            if cont.lower() == "n":
+                done = True
+            elif cont.lower() != "y":
+                print("Error: invalid input")
+                continue
     
     def delete(self):
         "Deletes entries in the balance sheet"
-        return 0
+        done = False
+        while not done:
+            # whether we are deleting an asset or liability
+            a_o_l = input("\nAsset or Liability (a/l)? ")
+            if a_o_l.lower() == "a":
+                type_sec = "Asset"
+            elif a_o_l.lower() == "l":
+                type_sec = "Liability"
+            else:
+                print("Error: invalid input")
+                continue
+            # which item to modify
+            item = input("Which item would you like to delete?")
+            try:
+                item = int(inp)
+            except ValueError:
+                print("Error: invalid input")
+                continue
+            # make the deletion
+            self.bs.delete(type_sec, item)
+            # ask to continue
+            cont = input("Continue (y/n)? ")
+            if cont.lower() == "n":
+                done = True
+            elif cont.lower() != "y":
+                print("Error: invalid input")
+                continue
+
 
     def new(self):
         "Create a new balance sheet"

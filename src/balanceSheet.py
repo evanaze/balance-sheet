@@ -67,19 +67,35 @@ class BalanceSheet:
         x = [self.table_id] + item
         cursorObj.execute('INSERT INTO balancesheet(table_id, type, name, value, description) VALUES(?, ?, ?, ?, ?)', x)
         self.con.commit()
+
+    def modify(self, type_sec, item, field, value):
+        "modifies value of the field of the type of item"
+        # the type of security we are modifying
+        if type_sec == "Asset":
+            self.ass.at[item, field] = value 
+        elif type_sec == "Liability":
+            self.liab.at[item, field] = value
+    
+    def delte(self, type_sec, item):
+        "dete an item on assets or liabilities"
+        # the type of security we are deleting
+        if type_sec == "Asset":
+            self.ass.drop(item, inplace=True)
+        elif type_sec == "Liability":
+            self.liab.drop(item, inplace=True)
     
     def eval(self):
         "Evaluates the value of the balance sheet"
         # assets
         try:
             self.ass = self.data.loc['Asset'].reset_index(drop=True)
-            print(self.ass)
             self.tot_ass = self.ass.Value.sum()
         except KeyError:
             self.tot_ass = 0
         # liabilities
         try:
-            self.liab = self.data.loc['Liability']
+            self.liab = self.data.loc['Liability'].reset_index(drop=True)
+            print(self.liab)
             self.tot_liab = self.liab.Value.sum()
         except KeyError:
             self.tot_liab = 0
