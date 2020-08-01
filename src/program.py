@@ -1,6 +1,6 @@
 """Updates the balance sheet for the month"""
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime
 import balanceSheet
 
 

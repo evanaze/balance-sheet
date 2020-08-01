@@ -2,8 +2,6 @@
 
     Backend in SQL, persists in memory with Pandas.
 """
-import os
-from datetime import datetime
 import pandas as pd 
 import sqlite3
 
@@ -92,7 +90,7 @@ class BalanceSheet:
     def move_forward(self):
         "copies the current balance sheet and increments the table_id"
         cursorObj = self.con.cursor()
-        cursorObj.execute(f"INSERT INTO balancesheet(table_id, type, name, value, description) SELECT {self.table_id+1}, type, name, value, description WHERE table_id = {self.table_id}")
+        cursorObj.execute(f"INSERT INTO balancesheet(table_id, type, name, value, description) SELECT {self.table_id+1}, type, name, value, description FROM balancesheet WHERE table_id={self.table_id}")
         self.con.commit()
 
     def modify(self, type_sec, item, field, value):
