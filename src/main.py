@@ -6,7 +6,7 @@ from . import balanceSheet
 class Program:
     def __init__(self):
         self.bs = balanceSheet.BalanceSheet()
-        self.month_year = str(datetime.today().date().month) + "/" + str(datetime.today().date().year)
+        self.today = str(datetime.today().date())
 
     def add(self):
         "Prompt the user to add new items to the balance sheet"
@@ -103,12 +103,13 @@ class Program:
                 print("Error: invalid input")
                 continue
 
-
     def new(self):
         "Create a new balance sheet"
+        # add the date of the new balance sheet
+        print("Setting first balance sheet")
+        self.bs.insert_date(self.today)
+        # add items to the new balance sheet
         self.add()
-        print(f"Your current balance sheet for {self.month_year}")
-        self.bs.display()
 
     def check_for_update(self):
         "Check if we need to make a new balance sheet for the month"
@@ -118,8 +119,6 @@ class Program:
         "Checks if we have a previous balance sheet to carry through or edit"
         self.bs.get_date()
         if not self.bs.last_date:
-            print("Setting first balance sheet")
-            self.bs.insert_date(self.month_year)
             self.new()
 
     def run(self):
@@ -128,12 +127,9 @@ class Program:
         self.check_init()
         # read the saved balance sheet
         self.bs.read()
-        if len(self.bs) == 0:
-            print("Creating first Balance Sheet")
-            self.new()
-        print(f"\nBalance sheet for {self.month_year}:\n")
+        print(f"\nBalance sheet for {self.today}:\n")
         self.bs.display()
-        edit = input(f"\nEdit your current balance sheet for {self.month_year}? (y/n) ")
+        edit = input(f"\nEdit your current balance sheet for {self.today}? (y/n) ")
         if edit.lower() == 'y':
             prompt = input("add, modify, or delete? ")
             if prompt == "add":
