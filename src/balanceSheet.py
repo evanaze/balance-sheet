@@ -29,8 +29,11 @@ class BalanceSheet:
         "makes a new empty balance sheet"
         # the cursor object
         cursorObj = self.con.cursor()
-        cursorObj.execute("CREATE TABLE IF NOT EXISTS balancesheet(table_id integer, type text, name text, value real, description text)")
+        # the balance sheet table
+        cursorObj.execute("CREATE TABLE IF NOT EXISTS balancesheet(item_id GENERATED ALWAYS AS IDENTITY, table_id integer, type text, name text, value real, description text)")
+        # a table to keep track of when the tables were updates
         cursorObj.execute("CREATE TABLE IF NOT EXISTS lastupdated(table_id integer PRIMARY KEY, date text)")
+        # a table for stats on our progress
         cursorObj.execute("CREATE TABLE IF NOT EXISTS stats(table_id integer PRIMARY KEY, date text, assets real, liabilities real, net_worth real)")
         self.con.commit()
 
@@ -86,6 +89,7 @@ class BalanceSheet:
             self.liab.at[item, field] = value
         # update the SQL table
         cursorObj = cursorObj.execute(f"UPDATE balancesheet SET field = value WHERE type = type_sec AND table_id = tab_id", (field, value, type_sec, self.table_id))
+        self.con.commit()
     
     def delete(self, type_sec, item):
         "dete an item on assets or liabilities"
@@ -98,6 +102,7 @@ class BalanceSheet:
             self.liab.drop(item, inplace=True)
         # update the SQL table
         cursorObj = cursorObj.execute(f"DELETE FROM balancesheet WHERE type = type_sec AND table_id = tab_id", (type_sec, self.table_id))
+        self.con.commit()
 
     def eval(self):
         "Evaluates the value of the balance sheet"
