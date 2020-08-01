@@ -123,9 +123,24 @@ class Program:
                 print("Error: invalid input")
                 continue
 
+    def move_forward(self):
+        "moves the balance sheet from last month forward"
+        # read the balance sheet
+        self.bs.read()
+        # copy the balance sheet into this month
+        self.bs.copy()
+
     def check_for_update(self):
         "Check if we need to make a new balance sheet for the month"
+        # get the last time we updated a balance sheet
         last_update = datetime.strptime(self.bs.last_date, "%Y-%m-%d")
+        # check if we need to make a new one
+        if last_update.month > self.today.month:
+            # move the balance sheet from last time into this month
+            self.move_forward()
+        else:
+            # update the last updated date to today
+            self.bs.update_date(self.today)
 
     def check_init(self):
         "Checks if we have a previous balance sheet to carry through or edit"

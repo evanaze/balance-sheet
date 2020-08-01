@@ -11,7 +11,6 @@ import sqlite3
 class BalanceSheet:
     "The balance sheet class"
     def __init__(self):
-        self.today = str(datetime.today().date())
         self.sql_connection()       # opens the connection to the database
         self.sql_table()            # creates the tables if they have not been created
         self.get_date()             # get the date of the last balance sheet
@@ -21,6 +20,7 @@ class BalanceSheet:
         return len(self.data)
 
     def sql_connection(self):
+        "opens a connection to the local sql database"
         try:
             self.con = sqlite3.connect("balancesheet.db")
         except sqlite3.Error:
@@ -74,11 +74,11 @@ class BalanceSheet:
         cursorObj = cursorObj.execute("INSERT INTO lastupdated(table_id, date) VALUES(?, ?)", (self.table_id, date))
         self.con.commit()
 
-    def update_date(self):
+    def update_date(self, today):
         "updates the date of the current balancesheet"
         # the cursor object
         cursorObj = self.con.cursor()
-        cursorObj = cursorObj.execute(f"UPDATE lastupdated SET date = {self.today} WHERE table_id = {self.table_id}")
+        cursorObj = cursorObj.execute(f"UPDATE lastupdated SET date = {today} WHERE table_id = {self.table_id}")
         self.con.commit()
 
     def insert(self, item):
@@ -88,6 +88,9 @@ class BalanceSheet:
         x = [self.table_id] + item
         cursorObj.execute('INSERT INTO balancesheet(table_id, type, name, value, description) VALUES(?, ?, ?, ?, ?)', x)
         self.con.commit()
+
+    def copy(self):
+        "copies the current balance sheet and increments the table_id"
 
     def modify(self, type_sec, item, field, value):
         "modifies value of the field of the type of item"
