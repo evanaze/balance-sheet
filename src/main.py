@@ -25,7 +25,7 @@ class Program:
             res.append(name)
             val = input("Value: ")
             try:
-                res.append(int(val))
+                res.append(float(val))
             except ValueError:
                 print("Error: invalid input")
                 continue
