@@ -16,7 +16,6 @@ class BalanceSheet:
         self.sql_table()            # creates the tables if they have not been created
         self.get_date()             # get the date of the last balance sheet
         self.get_table_id()         # get the current table id
-        print(self.table_id)
 
     def __len__(self):
         return len(self.data)
@@ -167,4 +166,4 @@ class BalanceSheet:
             print(f"\nLiabilities:\n{self.liab}")
             print(f"Total Liabilities: {self.tot_liab}")
         # net worth
-        print(f"Net worth: {self.net_worth}")
+        print(f"\nNet worth: {self.net_worth}")

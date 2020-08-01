@@ -125,7 +125,7 @@ class Program:
 
     def check_for_update(self):
         "Check if we need to make a new balance sheet for the month"
-        print(self.bs.get_date())
+        last_update = datetime.strptime(self.bs.last_date, "%Y-%m-%d")
 
     def check_init(self):
         "Checks if we have a previous balance sheet to carry through or edit"
@@ -155,8 +155,9 @@ class Program:
         # read the saved balance sheet
         self.bs.read()
         # display the current balance sheet
-        print(f"\nBalance sheet for {self.today}:\n")
+        print(f"Balance sheet for {self.today}:")
         self.bs.display()
+        # prompt to edit the balance sheet
         edit = input(f"\nEdit your current balance sheet for {self.today}? (y/n) ")
         if edit.lower() == 'y':
             done = False
