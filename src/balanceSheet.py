@@ -147,6 +147,8 @@ class BalanceSheet:
 
     def display(self):
         "Displays the current state of the balance sheet"
+        # read from the sql table
+        self.read()
         # eval
         self.eval()
         # assets
