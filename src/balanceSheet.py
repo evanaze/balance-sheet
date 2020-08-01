@@ -27,6 +27,7 @@ class BalanceSheet:
 
     def sql_table(self):
         "makes a new empty balance sheet"
+        # the cursor object
         cursorObj = self.con.cursor()
         cursorObj.execute("CREATE TABLE IF NOT EXISTS balancesheet(table_id integer, type text, name text, value real, description text)")
         cursorObj.execute("CREATE TABLE IF NOT EXISTS lastupdated(table_id integer PRIMARY KEY, date text)")
@@ -43,18 +44,21 @@ class BalanceSheet:
 
     def get_date(self):
         "Gets the most recent balance sheet"
+        # the cursor object
         cursorObj = self.con.cursor()
         cursorObj = cursorObj.execute("SELECT date FROM lastupdated ORDER BY table_id DESC LIMIT 1")
         self.last_date = cursorObj.fetchone()[0]
 
     def get_table_id(self):
-        # get the id number of the new table
+        "get the id number of the new table"
+        # the cursor object
         cursorObj = self.con.cursor()
         cursorObj = cursorObj.execute("SELECT MAX(table_id) FROM lastupdated")
         self.table_id = cursorObj.fetchone()[0]
 
     def insert_date(self, date):
         "inserts the newest date"
+        # the cursor object
         cursorObj = self.con.cursor()
         if self.last_date != date:
             self.table_id += 1
@@ -63,6 +67,7 @@ class BalanceSheet:
 
     def insert(self, item):
         "inserts an asset or liability"
+        # the cursor object
         cursorObj = self.con.cursor()
         x = [self.table_id] + item
         cursorObj.execute('INSERT INTO balancesheet(table_id, type, name, value, description) VALUES(?, ?, ?, ?, ?)', x)
@@ -70,20 +75,30 @@ class BalanceSheet:
 
     def modify(self, type_sec, item, field, value):
         "modifies value of the field of the type of item"
+        # the cursor object
+        cursorObj = self.con.cursor()
         # the type of security we are modifying
         if type_sec == "Asset":
+            # update the assets dataframe
             self.ass.at[item, field] = value 
         elif type_sec == "Liability":
+            # update the liabilities dataframe
             self.liab.at[item, field] = value
+        # update the SQL table
+        cursorObj = cursorObj.execute(f"UPDATE balancesheet SET field = value WHERE type = type_sec AND table_id = tab_id", (field, value, type_sec, self.table_id))
     
-    def delte(self, type_sec, item):
+    def delete(self, type_sec, item):
         "dete an item on assets or liabilities"
+        # the cursor object
+        cursorObj = self.con.cursor()
         # the type of security we are deleting
         if type_sec == "Asset":
             self.ass.drop(item, inplace=True)
         elif type_sec == "Liability":
             self.liab.drop(item, inplace=True)
-    
+        # update the SQL table
+        cursorObj = cursorObj.execute(f"DELETE FROM balancesheet WHERE type = type_sec AND table_id = tab_id", (type_sec, self.table_id))
+
     def eval(self):
         "Evaluates the value of the balance sheet"
         # assets

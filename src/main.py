@@ -53,16 +53,16 @@ class Program:
                 print("Error: invalid input")
                 continue
             # which item to modify
-            item = input("Which item would you like to modify?")
+            item = input("Which item would you like to modify? ")
             try:
                 item = int(inp)
             except ValueError:
                 print("Error: invalid input")
                 continue
             # the field to modify
-            field = input("Which field? (name, value, description?)")
+            field = input("Which field? (name, value, description?) ")
             # what to make the new value
-            value = input("What is the new value?")
+            value = input("What is the new value? ")
             # make the modification
             self.bs.modify(type_sec, item, field, value)
             # ask to continue
@@ -84,12 +84,12 @@ class Program:
             elif a_o_l.lower() == "l":
                 type_sec = "Liability"
             else:
-                print("Error: invalid input")
+                print("Error: invalid input ")
                 continue
             # which item to modify
-            item = input("Which item would you like to delete?")
+            item = input("Which item would you like to delete? ")
             try:
-                item = int(inp)
+                item = int(item)
             except ValueError:
                 print("Error: invalid input")
                 continue
