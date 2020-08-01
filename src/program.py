@@ -7,7 +7,7 @@ import balanceSheet
 class Program:
     def __init__(self):
         self.bs = balanceSheet.BalanceSheet()
-        self.today = datetime.today().date() + timedelta(60)
+        self.today = datetime.today().date()
 
     def add(self):
         "Prompt the user to add new items to the balance sheet"
