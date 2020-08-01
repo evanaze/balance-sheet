@@ -78,7 +78,7 @@ class BalanceSheet:
         "updates the date of the current balancesheet"
         # the cursor object
         cursorObj = self.con.cursor()
-        cursorObj = cursorObj.execute("UPDATE lastupdated SET date = new_date WHERE table_id = tab_id", (self.today, self.table_id))
+        cursorObj = cursorObj.execute("UPDATE lastupdated SET date = ? WHERE table_id = ?", (self.today, self.table_id))
         self.con.commit()
 
     def insert(self, item):
@@ -101,7 +101,7 @@ class BalanceSheet:
             # update the liabilities dataframe
             self.liab.at[item, field] = value
         # update the SQL table
-        cursorObj = cursorObj.execute(f"UPDATE balancesheet SET field = value WHERE type = type_sec AND table_id = tab_id", (field, value, type_sec, self.table_id))
+        cursorObj = cursorObj.execute("UPDATE balancesheet SET ? = ? WHERE type = ? AND table_id = ?", (field, value, type_sec, self.table_id))
         self.con.commit()
 
     def delete(self, type_sec, item):
@@ -116,7 +116,7 @@ class BalanceSheet:
             self.liab.drop(item, inplace=True)
             sql_item_id = item + len(self.ass) + 1
         # update the SQL table
-        cursorObj = cursorObj.execute(f"DELETE FROM balancesheet WHERE item_id = sql_item_id", (sql_item_id))
+        cursorObj = cursorObj.execute("DELETE FROM balancesheet WHERE item_id = ?", (sql_item_id))
         self.con.commit()
 
     def eval(self):
