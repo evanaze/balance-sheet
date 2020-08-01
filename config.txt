@@ -1,0 +1,4 @@
+# config.txt
+
+[feed]
+url = https://evanaze.github.io/projects/balance-sheet/
