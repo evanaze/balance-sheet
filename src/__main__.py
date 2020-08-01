@@ -1,6 +1,5 @@
 # __main__.py
 
-import balanceSheet
 import program
 
 def main():
