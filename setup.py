@@ -24,7 +24,7 @@ setup(
         "Programming Language :: Python :: 3.7",
     ],
     packages=find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
-    include_package_data=True,
+    include_package_data=False,
     entry_points={
         "console_scripts": [
             "realpython=src.__main__:main",
