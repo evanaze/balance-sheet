@@ -89,8 +89,11 @@ class BalanceSheet:
         cursorObj.execute('INSERT INTO balancesheet(table_id, type, name, value, description) VALUES(?, ?, ?, ?, ?)', x)
         self.con.commit()
 
-    def copy(self):
+    def move_forward(self):
         "copies the current balance sheet and increments the table_id"
+        cursorObj = self.con.cursor()
+        cursorObj.execute(f"INSERT INTO balancesheet(table_id, type, name, value, description) SELECT {self.table_id+1}, type, name, value, description WHERE table_id = {self.table_id}")
+        self.con.commit()
 
     def modify(self, type_sec, item, field, value):
         "modifies value of the field of the type of item"

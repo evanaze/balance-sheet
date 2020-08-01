@@ -1,13 +1,13 @@
 """Updates the balance sheet for the month"""
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 import balanceSheet
 
 
 class Program:
     def __init__(self):
         self.bs = balanceSheet.BalanceSheet()
-        self.today = str(datetime.today().date())
+        self.today = datetime.today().date() + timedelta(60)
 
     def add(self):
         "Prompt the user to add new items to the balance sheet"
@@ -123,21 +123,14 @@ class Program:
                 print("Error: invalid input")
                 continue
 
-    def move_forward(self):
-        "moves the balance sheet from last month forward"
-        # read the balance sheet
-        self.bs.read()
-        # copy the balance sheet into this month
-        self.bs.copy()
-
     def check_for_update(self):
         "Check if we need to make a new balance sheet for the month"
         # get the last time we updated a balance sheet
         last_update = datetime.strptime(self.bs.last_date, "%Y-%m-%d")
         # check if we need to make a new one
-        if last_update.month > self.today.month:
+        if last_update.month < self.today.month:
             # move the balance sheet from last time into this month
-            self.move_forward()
+            self.bs.move_forward()
         else:
             # update the last updated date to today
             self.bs.update_date(self.today)
@@ -150,7 +143,7 @@ class Program:
             # make a new balance sheet
             print("Setting first balance sheet")
             # add the date of the new balance sheet
-            self.bs.insert_date(self.today)
+            self.bs.insert_date(str(self.today))
             # add items to the new balance sheet
             self.add()
             # read the current balance sheet
