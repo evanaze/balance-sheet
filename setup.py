@@ -1,33 +1,48 @@
-import pathlib
-from setuptools import setup, find_packages
+"""
+A personal balance sheet running in SQLite and Python3
+"""
+from setuptools import find_packages, setup
 
-# The directory containing this file
-HERE = pathlib.Path(__file__).parent
+dependencies = ['click']
 
-# The text of the README file
-README = (HERE / "README.md").read_text()
-
-# This call to setup() does all the work
 setup(
-    name="balance-sheet",
-    version="1.0.0",
-    description="A personal balance sheet program",
-    long_description=README,
-    long_description_content_type="text/markdown",
-    url="https://github.com/evanaze/balance-sheet",
-    author="Evan Azevedo",
-    author_email="evanazzvd@gmail.com",
-    license="MIT",
-    classifiers=[
-        "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
-    ],
-    packages=find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
-    include_package_data=False,
+    name='balance-sheet',
+    version='1.0.0',
+    url='https://github.com/evanaze/balance-sheet',
+    license='BSD',
+    author='Evan Azevedo',
+    author_email='evanazzvd@gmail.com',
+    description='A personal balance sheet running in SQLite and Python3',
+    long_description=__doc__,
+    packages=find_packages(exclude=['tests']),
+    include_package_data=True,
+    zip_safe=False,
+    platforms='any',
+    install_requires=dependencies,
     entry_points={
-        "console_scripts": [
-            "realpython=src.__main__:main",
-        ]
+        'console_scripts': [
+            'balance-sheet = balance_sheet.cli:main',
+        ],
     },
+    classifiers=[
+        # As from http://pypi.python.org/pypi?%3Aaction=list_classifiers
+        # 'Development Status :: 1 - Planning',
+        # 'Development Status :: 2 - Pre-Alpha',
+        # 'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
+        # 'Development Status :: 5 - Production/Stable',
+        # 'Development Status :: 6 - Mature',
+        # 'Development Status :: 7 - Inactive',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: BSD License',
+        'Operating System :: POSIX',
+        'Operating System :: MacOS',
+        'Operating System :: Unix',
+        'Operating System :: Microsoft :: Windows',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 3',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+    ]
 )
