@@ -3,7 +3,7 @@ A personal balance sheet running in SQLite and Python3
 """
 from setuptools import find_packages, setup
 
-dependencies = ['click']
+dependencies = ['click', 'pandas']
 
 setup(
     name='balance-sheet',
