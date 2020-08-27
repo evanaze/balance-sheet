@@ -1,6 +1,6 @@
 import pytest
 from click.testing import CliRunner
-from balance-sheet import cli
+from balance_sheet import cli
 
 
 @pytest.fixture
@@ -12,18 +12,5 @@ def test_cli(runner):
     result = runner.invoke(cli.main)
     assert result.exit_code == 0
     assert not result.exception
-    assert result.output.strip() == 'Hello, world.'
+    assert result.output.strip() == 'Setting first balance sheet'
 
-
-def test_cli_with_option(runner):
-    result = runner.invoke(cli.main, ['--as-cowboy'])
-    assert not result.exception
-    assert result.exit_code == 0
-    assert result.output.strip() == 'Howdy, world.'
-
-
-def test_cli_with_arg(runner):
-    result = runner.invoke(cli.main, ['Evan'])
-    assert result.exit_code == 0
-    assert not result.exception
-    assert result.output.strip() == 'Hello, Evan.'
