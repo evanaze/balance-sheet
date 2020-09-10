@@ -2,6 +2,8 @@
 
     Backend in SQL, persists in memory with Pandas.
 """
+import os
+from pathlib import Path
 import pandas as pd 
 import sqlite3
 
@@ -19,8 +21,15 @@ class BalanceSheet:
 
     def sql_connection(self):
         "opens a connection to the local sql database"
+        # get the location of the home directory
+        home = Path.home()
+        # check if there is a .balance_sheet directory
+        if not '.balance_sheet' in os.listdir(home):
+            # create one if it does not exist
+            os.mkdir(home + '/.balance_sheet')
+        # open the connection to the database
         try:
-            self.con = sqlite3.connect("balancesheet.db")
+            self.con = sqlite3.connect("~/.balance_sheet/balancesheet.db")
         except sqlite3.Error:
             print(sqlite3.Error)
 
