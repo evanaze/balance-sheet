@@ -12,6 +12,7 @@ setup(
     author_email='evanazzvd@gmail.com',
     description='A personal balance sheet running in SQLite and Python3',
     long_description=__doc__,
+    long_description_content_type='text/markdown',
     packages=find_packages(exclude=['tests']),
     include_package_data=True,
     zip_safe=False,
