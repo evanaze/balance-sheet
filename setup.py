@@ -10,7 +10,7 @@ setup(
     license='BSD',
     author='Evan Azevedo',
     author_email='evanazzvd@gmail.com',
-    description='A personal balance sheet running in SQLite and Python3.',
+    description='A personal balance sheet running in SQLite and Python3',
     long_description=__doc__,
     packages=find_packages(exclude=['tests']),
     include_package_data=True,
