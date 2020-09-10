@@ -29,7 +29,7 @@ class BalanceSheet:
             os.mkdir(os.path.join(home, '.balance_sheet'))
         # open the connection to the database
         try:
-            self.con = sqlite3.connect("~/.balance_sheet/balancesheet.db")
+            self.con = sqlite3.connect(os.path.join(home, ".balance_sheet/balancesheet.db"))
         except sqlite3.Error:
             print(sqlite3.Error)
 
