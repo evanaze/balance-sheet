@@ -26,7 +26,7 @@ class BalanceSheet:
         # check if there is a .balance_sheet directory
         if not '.balance_sheet' in os.listdir(home):
             # create one if it does not exist
-            os.mkdir(home + '/.balance_sheet')
+            os.mkdir(os.path.join(home, '.balance_sheet'))
         # open the connection to the database
         try:
             self.con = sqlite3.connect("~/.balance_sheet/balancesheet.db")
