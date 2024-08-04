@@ -6,7 +6,7 @@ dependencies = ['click', 'pandas']
 setup(
     name='balance-sheet',
     version='1.1.0',
-    url='https://github.com/evanaze/balance_sheet',
+    url='https://github.com/evanaze/balance-sheet',
     license='BSD',
     author='Evan Azevedo',
     author_email='evanazzvd@gmail.com',
